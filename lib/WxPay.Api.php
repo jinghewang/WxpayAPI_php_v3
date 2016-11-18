@@ -1,7 +1,16 @@
 <?php
+
+//error_reporting(E_ERROR);
+
 require_once "WxPay.Exception.php";
 require_once "WxPay.Config.php";
 require_once "WxPay.Data.php";
+
+function print_r2($expression, $return = null) {
+    echo '<pre>';
+    print_r($expression);
+    echo '</pre>';
+}
 
 /**
  * 

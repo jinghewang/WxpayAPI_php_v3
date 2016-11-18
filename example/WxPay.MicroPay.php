@@ -27,14 +27,15 @@ class MicroPay
 	public function pay($microPayInput)
 	{
 		//①、提交被扫支付
-		$result = WxPayApi::micropay($microPayInput, 5);
+		$result = WxPayApi::micropay($microPayInput, 30);
+
 		//如果返回成功
 		if(!array_key_exists("return_code", $result)
 			|| !array_key_exists("out_trade_no", $result)
 			|| !array_key_exists("result_code", $result))
 		{
-			echo "接口调用失败,请确认是否输入是否有误！";
-			throw new WxPayException("接口调用失败！");
+			//echo "接口调用失败,请确认是否输入是否有误！";
+            throw new WxPayException("接口调用失败！", 0, null, $result);
 		}
 		
 		//签名验证
