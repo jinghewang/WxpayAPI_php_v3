@@ -30,7 +30,7 @@ $input->SetTotal_fee("1");
 $input->SetTime_start(date("YmdHis"));
 $input->SetTime_expire(date("YmdHis", time() + 600));
 $input->SetGoods_tag("test");
-$input->SetNotify_url("http://paysdk.weixin.qq.com/example/notify.php");
+$input->SetNotify_url("http://lz.hbdworld.com.cn/company_v3/wxpay/notify");//?rurl=".urlencode("http://wxpay/example/notify.php"));
 $input->SetTrade_type("JSAPI");
 $input->SetOpenid($openId);
 $order = WxPayApi::unifiedOrder($input);
@@ -40,6 +40,9 @@ $jsApiParameters = $tools->GetJsApiParameters($order);
 
 //获取共享收货地址js函数参数
 $editAddress = $tools->GetEditAddressParameters();
+
+print_r2('------------输出参数------------');
+print_r2($jsApiParameters);
 
 //③、在支持成功回调通知中处理成功之后的事宜，见 notify.php
 /**
@@ -55,6 +58,7 @@ $editAddress = $tools->GetEditAddressParameters();
     <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/> 
     <title>微信支付样例-支付</title>
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.js"></script>
     <script type="text/javascript">
 	//调用微信JS api 支付
 	function jsApiCall()
@@ -82,6 +86,15 @@ $editAddress = $tools->GetEditAddressParameters();
 		    jsApiCall();
 		}
 	}
+
+    function callpay2()
+    {
+        <?php
+        $url = "http://lz.hbdworld.com.cn/company_v3/wxpay/jsapi?jsApiParameters={$jsApiParameters}";
+        ?>
+        window.location = '<?php echo $url ?>';
+        return false;
+    }
 	</script>
 	<script type="text/javascript">
 	//获取共享地址
@@ -123,5 +136,8 @@ $editAddress = $tools->GetEditAddressParameters();
 	<div align="center">
 		<button style="width:210px; height:50px; border-radius: 15px;background-color:#FE6714; border:0px #FE6714 solid; cursor: pointer;  color:white;  font-size:16px;" type="button" onclick="callpay()" >立即支付</button>
 	</div>
+    <div align="center" style="padding: 4px">
+        <button style="width:210px; height:50px; border-radius: 15px;background-color:#669ffe; border:0px #669ffe solid; cursor: pointer;  color:white;  font-size:16px;" type="button" onclick="callpay2()" >发送支付信息</button>
+    </div>
 </body>
 </html>
